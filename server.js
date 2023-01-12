@@ -45,6 +45,7 @@ app.post("/record/add", async function (req, response) {
     code: req.body.code,
     status: req.body.status,
     routine: req.body.routine,
+    name: req.body.name,
   };
   dbConnect
     .collection("users")
