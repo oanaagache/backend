@@ -11,14 +11,14 @@ const dbo = require("./connection");
 const ObjectId = require("mongodb").ObjectId;
 
 // get a list of all the records
-app.get("/record", async function (req, res) {
+app.get("/record", async function (req, response) {
   const dbConnect = dbo.getDb();
   dbConnect
     .collection("users")
     .find({})
     .toArray(function (err, result) {
       if (err) throw err;
-      res.json(result);
+      response.json(result);
     });
 });
 
