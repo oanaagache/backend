@@ -23,14 +23,24 @@ app.get("/record", async function (req, response) {
 });
 
 // get a single record by id
-app.get("/record/:id", async function (req, res) {
+app.get("/record/:id", async function (req, response) {
   const dbConnect = dbo.getDb();
   let myquery = { _id: ObjectId(req.params.id) };
   dbConnect.collection("users").findOne(myquery, function (err, result) {
     if (err) throw err;
-    res.json(result);
+    response.json(result);
   });
 });
+
+// // get a single record by email
+// app.get("/:email", async function (req, response) {
+//   const dbConnect = dbo.getDb();
+//   let myquery = { email: ObjectId(req.params.email) };
+//   dbConnect.collection("users").findOne(myquery, function (err, result) {
+//     if (err) throw err;
+//     response.json(result);
+//   });
+// });
 
 //add a new record
 app.post("/record/add", async function (req, response) {
