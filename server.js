@@ -105,6 +105,18 @@ app.delete("/:id", async function (req, response) {
   });
 });
 
+// get a list of all the articles
+app.get("/articles", async function (req, response) {
+  const dbConnect = dbo.getDb();
+  dbConnect
+    .collection("articles")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      response.json(result);
+    });
+});
+
 app.listen(port, () => {
   dbo.connectToServer(function (err) {
     if (err) console.error(err);
