@@ -117,6 +117,24 @@ app.get("/articles", async function (req, response) {
     });
 });
 
+//add a new record
+app.post("/articles/add", async function (req, response) {
+  const dbConnect = dbo.getDb();
+  const item = {
+    title: req.body.title,
+    image: req.body.image,
+  };
+  dbConnect
+    .collection("articles")
+    .insertOne(item, async function (err, result) {
+      if (err) {
+        response.status(400).send("Error fetching listings!");
+      } else {
+        response.json(result);
+      }
+    });
+});
+
 app.listen(port, () => {
   dbo.connectToServer(function (err) {
     if (err) console.error(err);
