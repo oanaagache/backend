@@ -13,7 +13,6 @@ module.exports = {
       if (err || !db) {
         return callback(err);
       }
-
       dbConnection = db.db("shelter");
       console.log("Successfully connected to MongoDB.");
       return callback();
