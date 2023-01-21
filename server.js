@@ -79,11 +79,28 @@ app.get("/record/:id", async function (req, response) {
   });
 });
 
+// get a list of all the records
+app.get("/user", async function (req, response) {
+  const dbConnect = dbo.getDb();
+  dbConnect
+    .collection("users")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      let length = result.length;
+      for (var i = 0; i < length; i++) {
+        console.log(result[i].email);
+      }
+      // response.json(result[0].email);
+      response.json(result);
+    });
+});
+
 // get a single record by id in Edit.js
 // get a list of all the records
-app.get("/email", async function (req, response) {
+app.get("/user/:email", async function (req, response) {
   const dbConnect = dbo.getDb();
-  let myquery = { email: "oana.luciana.agache@gmail.com" };
+  let myquery = { email: String(req.params.email) };
   dbConnect
     .collection("users")
     .find(myquery)
