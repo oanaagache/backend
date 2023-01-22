@@ -9,7 +9,6 @@ const dbo = require("./connection");
 
 // convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
-//const String = require("mongodb").String;
 
 //add a new registerdUser
 app.post("/record/addNewUser", async function (req, response) {
@@ -89,9 +88,8 @@ app.get("/user", async function (req, response) {
       if (err) throw err;
       let length = result.length;
       for (var i = 0; i < length; i++) {
-        console.log(result[i].email);
+        //console.log(result[i].email);
       }
-      // response.json(result[0].email);
       response.json(result);
     });
 });
@@ -110,74 +108,74 @@ app.get("/user/:email", async function (req, response) {
     });
 });
 
-// //update a record by id in Edit.js
-// app.post("/update/:id", async function (req, response) {
-//   const dbConnect = dbo.getDb();
-//   let myquery = { _id: ObjectId(req.params.id) };
-//   let newvalues = {
-//     $set: {
-//       firstName: req.body.firstName,
-//       surname: req.body.surname,
-//       email: req.body.email,
-//       address: req.body.address,
-//       city: req.body.city,
-//       country: req.body.country,
-//       code: req.body.code,
-//       status: req.body.status,
-//       routine: req.body.routine,
-//     },
-//   };
-//   dbConnect
-//     .collection("users")
-//     .updateOne(myquery, newvalues, function (err, res) {
-//       if (err) throw err;
-//       console.log("1 document updated");
-//       response.json(res);
-//     });
-// });
+//update a record by id in Edit.js
+app.post("/update/:id", async function (req, response) {
+  const dbConnect = dbo.getDb();
+  let myquery = { _id: ObjectId(req.params.id) };
+  let newvalues = {
+    $set: {
+      firstName: req.body.firstName,
+      surname: req.body.surname,
+      email: req.body.email,
+      address: req.body.address,
+      city: req.body.city,
+      country: req.body.country,
+      code: req.body.code,
+      status: req.body.status,
+      routine: req.body.routine,
+    },
+  };
+  dbConnect
+    .collection("users")
+    .updateOne(myquery, newvalues, function (err, res) {
+      if (err) throw err;
+      console.log("1 document updated");
+      response.json(res);
+    });
+});
 
-// //delete a record in List.js
-// app.delete("/:id", async function (req, response) {
-//   const dbConnect = dbo.getDb();
-//   let myquery = { _id: ObjectId(req.params.id) };
-//   dbConnect.collection("users").deleteOne(myquery, function (err, obj) {
-//     if (err) throw err;
-//     console.log("1 document deleted");
-//     response.json(obj);
-//   });
-// });
+//delete a record in List.js
+app.delete("/:id", async function (req, response) {
+  const dbConnect = dbo.getDb();
+  let myquery = { _id: ObjectId(req.params.id) };
+  dbConnect.collection("users").deleteOne(myquery, function (err, obj) {
+    if (err) throw err;
+    console.log("1 document deleted");
+    response.json(obj);
+  });
+});
 
-// //articles
-// // get a list of all the articles
-// app.get("/articles", async function (req, response) {
-//   const dbConnect = dbo.getDb();
-//   dbConnect
-//     .collection("articles")
-//     .find({})
-//     .toArray(function (err, result) {
-//       if (err) throw err;
-//       response.json(result);
-//     });
-// });
+//articles
+// get a list of all the articles
+app.get("/articles", async function (req, response) {
+  const dbConnect = dbo.getDb();
+  dbConnect
+    .collection("articles")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      response.json(result);
+    });
+});
 
-// //add a new record
-// app.post("/articles/add", async function (req, response) {
-//   const dbConnect = dbo.getDb();
-//   const item = {
-//     title1: req.body.title1,
-//     title2: req.body.title2,
-//     image: req.body.image,
-//   };
-//   dbConnect
-//     .collection("articles")
-//     .insertOne(item, async function (err, result) {
-//       if (err) {
-//         response.status(400).send("Error fetching listings!");
-//       } else {
-//         response.json(result);
-//       }
-//     });
-// });
+//add a new record
+app.post("/articles/add", async function (req, response) {
+  const dbConnect = dbo.getDb();
+  const item = {
+    title1: req.body.title1,
+    title2: req.body.title2,
+    image: req.body.image,
+  };
+  dbConnect
+    .collection("articles")
+    .insertOne(item, async function (err, result) {
+      if (err) {
+        response.status(400).send("Error fetching listings!");
+      } else {
+        response.json(result);
+      }
+    });
+});
 
 app.listen(port, () => {
   dbo.connectToServer(function (err) {
